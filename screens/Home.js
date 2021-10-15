@@ -1,23 +1,21 @@
 import React from 'react';
 
 import {
-  Animated,
+  Button,
   Dimensions,
-  SafeAreaView,
   ScrollView,
-  StatusBar,
   StyleSheet,
   Text,
   Image,
   useColorScheme,
   View,
   ImageBackground,
+  TouchableOpacity,
 } from 'react-native';
 
 import image1 from '../assets/images/ph1.jpg';
 import image2 from '../assets/images/ph2.jpg';
 import image3 from '../assets/images/ph3.jpg';
-import chicagoImg from '../assets/images/chicago-nightlife.jpeg';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import 'react-native-gesture-handler';
@@ -30,9 +28,14 @@ const ratio = win.width / 541;
 const BirthdayPack = () => {
   return (
     <View style={styles.productOption}>
-      <ImageBackground style={styles.productImage} source={image1}>
-        <Text style={styles.productText}>Birthday Package</Text>
-      </ImageBackground>
+      <TouchableOpacity
+        onPress={() => {
+          alert('you chosen bachelorette party');
+        }}>
+        <ImageBackground style={styles.productImage} source={image1}>
+          <Text style={styles.productText}>Birthday Package</Text>
+        </ImageBackground>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -40,9 +43,14 @@ const BirthdayPack = () => {
 const BacheloretteParty = () => {
   return (
     <View style={styles.productOption}>
-      <ImageBackground style={styles.productImage} source={image2}>
-        <Text style={styles.productText}>Bachelorette Party</Text>
-      </ImageBackground>
+      <TouchableOpacity
+        onPress={() => {
+          alert('you chosen bachelorette party');
+        }}>
+        <ImageBackground style={styles.productImage} source={image2}>
+          <Text style={styles.productText}>Bachelorette Party</Text>
+        </ImageBackground>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -50,22 +58,26 @@ const BacheloretteParty = () => {
 const SurpriseParty = () => {
   return (
     <View style={styles.productOption}>
-      <ImageBackground style={styles.productImage} source={image3}>
-        <Text style={styles.productText}>Surprise Birthday Party</Text>
-      </ImageBackground>
+      <TouchableOpacity
+        onPress={() => {
+          alert('you chosen surprise party');
+        }}>
+        <ImageBackground style={styles.productImage} source={image3}>
+          <Text style={styles.productText}>Surprise Birthday Party</Text>
+        </ImageBackground>
+      </TouchableOpacity>
     </View>
   );
 };
 
 const Home = () => {
+  isDarkMode = useColorScheme() === 'dark';
+  const backgroundStyle = {
+    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  };
   return (
-    <ImageBackground
-      style={{
-        flex: 1,
-      }}
-      imageStyle={{resizeMode: 'cover'}}
-      source={chicagoImg}>
-      <ScrollView contentContainerStyle={{flexGrow: 1}}>
+    <View style={styles.bg}>
+      <ScrollView contentContainerStyle={{flexGrow: 1}} scrol>
         <View style={styles.container}>
           <Text
             style={{
@@ -76,7 +88,7 @@ const Home = () => {
               justifyContent: 'center',
               top: '10%',
               textAlign: 'center',
-              color: '#FFFFFF',
+              color: 'tomato',
             }}>
             Welcome To Chicago Nightlife Experience
             <BirthdayPack />
@@ -85,18 +97,22 @@ const Home = () => {
           </Text>
         </View>
       </ScrollView>
-    </ImageBackground>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  bg: {
+    backgroundColor: '#0f0f0f',
+  },
   container: {
     flex: 1,
     alignItems: 'center',
     position: 'relative',
     left: 0,
     right: 0,
-    paddingBottom: 150,
+    paddingBottom: 180,
+    backgroundColor: '#0f0f0f',
   },
   productOption: {
     alignItems: 'center',
@@ -112,6 +128,7 @@ const styles = StyleSheet.create({
     right: 16,
     bottom: 2,
     color: '#FFFFFF',
+    // color: 'gray',
   },
   productImage: {
     alignSelf: 'stretch',
