@@ -4,8 +4,18 @@ import {View, Text, StyleSheet, Button, useColorScheme} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import Icons from 'react-native-vector-icons/FontAwesome5';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
+import {Auth} from 'aws-amplify';
 
 let isDarkMode;
+
+async function signOut() {
+  try {
+    await Auth.signOut();
+    updateAuthState('loggedOut');
+  } catch (error) {
+    console.log('Error signing out: ', error);
+  }
+}
 
 const User = () => {
   isDarkMode = useColorScheme() === 'dark';
@@ -29,6 +39,7 @@ const User = () => {
               style={styles.editBtn}
               title="Edit Profile"
               color={isDarkMode ? Colors.darker : Colors.lighter}></Button>
+            <Button title="Sign Out" color="red" onPress={signOut} />
           </View>
         </View>
       </ScrollView>

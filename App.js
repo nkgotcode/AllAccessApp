@@ -23,6 +23,9 @@ import 'react-native-gesture-handler';
 import Main from './screens/Main';
 import chicagoImg from './assets/images/chicago-nightlife.jpeg';
 import {withAuthenticator} from 'aws-amplify-react-native';
+import Amplify, {Auth} from 'aws-amplify';
+import config from './src/aws-exports';
+Amplify.configure(config);
 
 const App = () => {
   isDarkMode = useColorScheme() === 'dark';
@@ -32,13 +35,13 @@ const App = () => {
   };
 
   return (
-    <ImageBackground
-      style={{
-        flex: 1,
-      }}
-      imageStyle={{resizeMode: 'cover'}}
-      source={chicagoImg}></ImageBackground>
-    // <Main></Main>
+    // <ImageBackground
+    //   style={{
+    //     flex: 1,
+    //   }}
+    //   imageStyle={{resizeMode: 'cover'}}
+    //   source={chicagoImg}></ImageBackground>
+    <Main></Main>
   );
 };
 
