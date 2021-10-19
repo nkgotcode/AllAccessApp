@@ -1,12 +1,12 @@
-import {style} from 'dom-helpers';
-import React from 'react';
-import {View, Text, StyleSheet, Button, useColorScheme} from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
+import React, {Component} from 'react';
+import {View, Text, StyleSheet, useColorScheme, Modal} from 'react-native';
+import {ScrollView, TouchableHighlight} from 'react-native-gesture-handler';
 import Icons from 'react-native-vector-icons/FontAwesome5';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {Auth} from 'aws-amplify';
 
 let isDarkMode;
+let state;
 
 async function signOut() {
   try {
@@ -19,7 +19,6 @@ async function signOut() {
 
 const User = () => {
   isDarkMode = useColorScheme() === 'dark';
-
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -30,18 +29,26 @@ const User = () => {
               size={80}
               color={isDarkMode ? Colors.darker : Colors.lighter}
               style={styles.profileImg}></Icons>
+            <TouchableHighlight style={styles.editBtn}>
+              <Icons
+                name="user-edit"
+                size={20}
+                color={isDarkMode ? Colors.darker : Colors.lighter}
+              />
+            </TouchableHighlight>
             <Text
               style={styles.title}
               color={isDarkMode ? Colors.darker : Colors.lighter}>
               Jordan Martinez
             </Text>
-            <Button
-              style={styles.editBtn}
-              title="Edit Profile"
-              color={isDarkMode ? Colors.darker : Colors.lighter}></Button>
-            <Button title="Sign Out" color="red" onPress={signOut} />
           </View>
         </View>
+        <TouchableHighlight
+          style={styles.logOutBtn}
+          color="red"
+          onPress={signOut}>
+          <Icons name="power-off" size={60} color="red" />
+        </TouchableHighlight>
       </ScrollView>
     </View>
   );
@@ -85,7 +92,14 @@ const styles = StyleSheet.create({
   },
   editBtn: {
     position: 'absolute',
-    left: 0,
+    alignSelf: 'center',
+    top: 8,
+    right: 4,
+  },
+  logOutBtn: {
+    position: 'relative',
+    alignSelf: 'center',
+    top: '800%',
   },
 });
 

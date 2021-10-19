@@ -13,6 +13,7 @@ import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {NavigationContainer} from '@react-navigation/native';
 import 'react-native-gesture-handler';
 import CustomTabBar from './CustomTabBar';
+import {AmplifyProvider} from '@aws-amplify/ui-react';
 
 let isDarkMode;
 const win = Dimensions.get('window');
@@ -21,9 +22,11 @@ const ratio = win.width / 541;
 const Main = () => {
   isDarkMode = useColorScheme() === 'dark';
   return (
+    // <AmplifyProvider>
     <NavigationContainer>
       <CustomTabBar />
     </NavigationContainer>
+    /* </AmplifyProvider> */
   );
 };
 
