@@ -27,5 +27,7 @@ target 'AllAccessApp' do
     react_native_post_install(installer)
   end
 
-  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons' 
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+  pod 'GoogleMaps'
+  pod 'Google-Maps-iOS-Utils' 
 end

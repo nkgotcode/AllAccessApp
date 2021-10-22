@@ -41,13 +41,14 @@ function App({user}) {
   isDarkMode = useColorScheme() === 'dark';
   CustomAmplifyTheme.container.backgroundColor = backgroundStyle;
   return (
-    <Authenticator
-      usernameAttributes="Email"
-      signUpConfig={signUpConfig}
-      theme={CustomAmplifyTheme}
-      authState="signIn"
-      authData={CognitoUser | 'username'}
-      onStateChange={authState => handleAuthStateChange}></Authenticator>
+    // <Authenticator
+    //   usernameAttributes="Email"
+    //   signUpConfig={signUpConfig}
+    //   theme={CustomAmplifyTheme}
+    //   authState="signIn"
+    //   authData={CognitoUser | 'username'}
+    //   onStateChange={authState => handleAuthStateChange}></Authenticator>
+    <Main></Main>
   );
 }
 

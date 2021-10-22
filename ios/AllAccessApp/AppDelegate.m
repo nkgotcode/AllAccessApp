@@ -24,6 +24,7 @@ static void InitializeFlipper(UIApplication *application) {
 }
 #endif
 
+@import GoogleMaps;
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application
@@ -38,7 +39,7 @@ static void InitializeFlipper(UIApplication *application) {
 #ifdef FB_SONARKIT_ENABLED
   InitializeFlipper(application);
 #endif
-
+  [GMSServices provideAPIKey:@"AIzaSyAgjd05Meq1-K79f3-EXY1i1SV6MtwEnpA"];
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
                                                    moduleName:@"AllAccessApp"

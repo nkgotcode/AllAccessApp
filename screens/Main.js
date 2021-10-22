@@ -7,6 +7,7 @@ import {
   Image,
   useColorScheme,
   View,
+  StatusBar,
 } from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
@@ -24,6 +25,7 @@ const Main = () => {
   return (
     // <AmplifyProvider>
     <NavigationContainer>
+      <StatusBar translucent barStyle="light-content" />
       <CustomTabBar />
     </NavigationContainer>
     /* </AmplifyProvider> */

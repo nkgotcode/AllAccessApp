@@ -72,6 +72,30 @@ PODS:
     - FlipperKit/FlipperKitNetworkPlugin
   - fmt (6.2.1)
   - glog (0.3.5)
+  - Google-Maps-iOS-Utils (4.0.0):
+    - Google-Maps-iOS-Utils/Clustering (= 4.0.0)
+    - Google-Maps-iOS-Utils/Geometry (= 4.0.0)
+    - Google-Maps-iOS-Utils/GeometryUtils (= 4.0.0)
+    - Google-Maps-iOS-Utils/Heatmap (= 4.0.0)
+    - Google-Maps-iOS-Utils/QuadTree (= 4.0.0)
+    - GoogleMaps
+  - Google-Maps-iOS-Utils/Clustering (4.0.0):
+    - Google-Maps-iOS-Utils/QuadTree
+    - GoogleMaps
+  - Google-Maps-iOS-Utils/Geometry (4.0.0):
+    - GoogleMaps
+  - Google-Maps-iOS-Utils/GeometryUtils (4.0.0):
+    - GoogleMaps
+  - Google-Maps-iOS-Utils/Heatmap (4.0.0):
+    - Google-Maps-iOS-Utils/QuadTree
+    - GoogleMaps
+  - Google-Maps-iOS-Utils/QuadTree (4.0.0):
+    - GoogleMaps
+  - GoogleMaps (5.2.0):
+    - GoogleMaps/Maps (= 5.2.0)
+  - GoogleMaps/Base (5.2.0)
+  - GoogleMaps/Maps (5.2.0):
+    - GoogleMaps/Base
   - libevent (2.1.12)
   - OpenSSL-Universal (1.1.180)
   - RCT-Folly (2021.06.28.00-v2):
@@ -272,6 +296,8 @@ PODS:
   - React-jsinspector (0.66.1)
   - React-logger (0.66.1):
     - glog
+  - react-native-maps (0.29.3):
+    - React-Core
   - react-native-netinfo (6.0.2):
     - React-Core
   - react-native-safe-area-context (3.3.2):
@@ -414,6 +440,8 @@ DEPENDENCIES:
   - FlipperKit/FlipperKitUserDefaultsPlugin (= 0.99.0)
   - FlipperKit/SKIOSNetworkPlugin (= 0.99.0)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
+  - Google-Maps-iOS-Utils
+  - GoogleMaps
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
   - RCTTypeSafety (from `../node_modules/react-native/Libraries/TypeSafety`)
@@ -428,6 +456,7 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
+  - react-native-maps (from `../node_modules/react-native-maps`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
@@ -464,6 +493,8 @@ SPEC REPOS:
     - Flipper-RSocket
     - FlipperKit
     - fmt
+    - Google-Maps-iOS-Utils
+    - GoogleMaps
     - libevent
     - OpenSSL-Universal
     - YogaKit
@@ -503,6 +534,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   React-logger:
     :path: "../node_modules/react-native/ReactCommon/logger"
+  react-native-maps:
+    :path: "../node_modules/react-native-maps"
   react-native-netinfo:
     :path: "../node_modules/@react-native-community/netinfo"
   react-native-safe-area-context:
@@ -565,6 +598,8 @@ SPEC CHECKSUMS:
   FlipperKit: d8d346844eca5d9120c17d441a2f38596e8ed2b9
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: 5337263514dd6f09803962437687240c5dc39aa4
+  Google-Maps-iOS-Utils: a06cb5c3a0e5b2a505fed82d936ba1b935f8971f
+  GoogleMaps: 025272d5876d3b32604e5c080dc25eaf68764693
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   OpenSSL-Universal: 1aa4f6a6ee7256b83db99ec1ccdaa80d10f9af9b
   RCT-Folly: a21c126816d8025b547704b777a2ba552f3d9fa9
@@ -579,6 +614,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: db2f6e22a534d466fc0e34e622df47d9d20bab2f
   React-jsinspector: 8c0517dee5e8c70cd6c3066f20213ff7ce54f176
   React-logger: bfddd3418dc1d45b77b822958f3e31422e2c179b
+  react-native-maps: 41d01d8e0afcebe32bec9eea3bd945adc1b18f7a
   react-native-netinfo: 92e6e4476eb8bf6fc2d7c0a6ca0a1406f663d73a
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
   React-perflogger: fcac6090a80e3d967791b4c7f1b1a017f9d4a398
@@ -603,6 +639,6 @@ SPEC CHECKSUMS:
   Yoga: 2b4a01651f42a32f82e6cef3830a3ba48088237f
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: f5ef674e2ef0369d7dac8964b18e624ece6b8ea4
+PODFILE CHECKSUM: 466315c012a311e93d6dbd1a38c809922893f3a6
 
 COCOAPODS: 1.11.0.beta.2

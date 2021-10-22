@@ -17,6 +17,15 @@ async function signOut() {
   }
 }
 
+async function test() {
+  try {
+    let userInfo = await Auth.currentUserInfo();
+    console.log(userInfo);
+  } catch (error) {
+    console.log('Error: ', error);
+  }
+}
+
 const User = () => {
   isDarkMode = useColorScheme() === 'dark';
   return (
@@ -34,6 +43,7 @@ const User = () => {
                 name="user-edit"
                 size={20}
                 color={isDarkMode ? Colors.darker : Colors.lighter}
+                onPress={test}
               />
             </TouchableHighlight>
             <Text
