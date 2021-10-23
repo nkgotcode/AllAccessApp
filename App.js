@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Dimensions,
   ScrollView,
@@ -16,6 +16,10 @@ import {
   useColorScheme,
   View,
   ImageBackground,
+  Button,
+  Linking,
+  Alert,
+  TouchableOpacity,
 } from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
@@ -26,37 +30,142 @@ import {
   withAuthenticator,
   AmplifyTheme,
   Authenticator,
+  withOAuth,
 } from 'aws-amplify-react-native';
 import Amplify, {Auth} from 'aws-amplify';
+import {Hub} from '@aws-amplify/core';
 // import {withAuthenticator} from '@aws-amplify/ui-react';
 // import '@aws-amplify/ui-react/node_modules/@aws-amplify/ui/dist/styles.css';
 import config from './src/aws-exports';
 import CustomAmplifyTheme from './screens/CustomAmplifyTheme';
 import {CognitoUser} from 'amazon-cognito-identity-js';
+import InAppBrowser from 'react-native-inappbrowser-reborn';
+import urlOpener from './screens/UrlOpener';
+import Icons from 'react-native-vector-icons/FontAwesome5';
 
-Amplify.configure(config);
+Amplify.configure({
+  ...config,
+  oauth: {
+    ...config.oauth,
+    urlOpener,
+  },
+});
+// Amplify.configure(config);
+
 let isDarkMode;
 
-function App({user}) {
-  isDarkMode = useColorScheme() === 'dark';
-  CustomAmplifyTheme.container.backgroundColor = backgroundStyle;
-  return (
-    // <Authenticator
-    //   usernameAttributes="Email"
-    //   signUpConfig={signUpConfig}
-    //   theme={CustomAmplifyTheme}
-    //   authState="signIn"
-    //   authData={CognitoUser | 'username'}
-    //   onStateChange={authState => handleAuthStateChange}></Authenticator>
-    <Main></Main>
-  );
-}
+const AuthScreens = props => {
+  console.log(props.authState);
+  switch (props.authState) {
+    case 'signedIn':
+      return <Main />;
+    default:
+      return <></>;
+  }
+};
 
-function handleAuthStateChange(state) {
-  if (state === 'signedIn') {
-    console.log('signed In');
+class App extends React.Component {
+  state = {
+    authenticated: false,
+  };
+
+  render() {
+    if (this.state.authenticated) {
+      return <Main />;
+    }
+    return (
+      <View style={{flex: 1}}>
+        {this.state.authenticated ? (
+          <Main />
+        ) : (
+          <Authenticator
+            usernameAttributes="Email"
+            signUpConfig={signUpConfig}
+            theme={CustomAmplifyTheme}
+            authState="signIn"
+            authData={CognitoUser | 'username'}
+            onStateChange={authState => AuthScreens}>
+            <View style={styles.federatedLogIn}>
+              <TouchableOpacity style={styles.federatedOptions}>
+                <Icons
+                  color={Colors.lighter}
+                  name="google"
+                  size={40}
+                  style={{paddingBottom: 10}}
+                  onPress={() => {
+                    Auth.federatedSignIn({provider: 'Google'});
+                  }}
+                />
+                <Text style={{color: Colors.lighter}}>Log in with Google</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={styles.federatedOptions}>
+                <Icons
+                  color={Colors.lighter}
+                  name="facebook"
+                  size={40}
+                  style={{paddingBottom: 10}}
+                  onPress={() => {
+                    Auth.federatedSignIn({provider: 'Facebook'});
+                  }}
+                />
+                <Text style={{color: Colors.lighter}}>
+                  Log in with Facebook
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </Authenticator>
+        )}
+      </View>
+    );
+
+    async function handleAuthStateChange() {
+      const user = await Auth.currentAuthenticatedUser().catch(err =>
+        console.log(err),
+      );
+      if (user != null) {
+        this.state.authenticated = true;
+      }
+    }
+  }
+
+  componentDidMount() {
+    Linking.getInitialURL()
+      .then(url => {
+        console.log('get initial url');
+        if (url) {
+          Alert.alert('GET INIT URL', `initial url  ${url}`);
+          console.log('GET INIT URL', `initial url  ${url}`);
+        }
+      })
+      .catch(e => {});
+
+    Linking.addEventListener('url', this.appWokeUp);
+  }
+
+  componentWillUnmount() {
+    Linking.addEventListener('url', this.appWokeUp).remove();
   }
 }
+
+handleAuth = ({payload}) => {
+  switch (payload.event) {
+    case 'parsingCallBackUrl':
+      if (payback.data.url) {
+        let urls = payload.data.url.split('?');
+        if (urls[0] === 'allaccessapp://') {
+          InAppBrowser.close();
+        } else if (urls[0] === 'allaccessapp://') {
+          InAppBrowser.close();
+        }
+      }
+      break;
+    case 'signOut':
+      InAppBrowser.close();
+      setAuthWaiting(false);
+      break;
+  }
+};
 
 const backgroundStyle = {
   backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
@@ -105,5 +214,16 @@ const signUpConfig = {
 };
 const usernameAttributes = 'Email';
 
+const styles = StyleSheet.create({
+  federatedOptions: {
+    alignItems: 'center',
+    paddingBottom: 16,
+  },
+  federatedLogIn: {
+    paddingTop: 20,
+    marginBottom: 200,
+  },
+});
+
 export * from './screens/CustomAmplifyTheme';
-export default App;
+export default withOAuth(App);
