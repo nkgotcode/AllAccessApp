@@ -171,4 +171,4 @@ var CustomAmplifyTheme = StyleSheet.create({
   },
 });
 
-export default CustomAmplifyTheme;
+export {CustomAmplifyTheme};

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {
   Dimensions,
   ScrollView,
@@ -16,6 +16,20 @@ import 'react-native-gesture-handler';
 import CustomTabBar from './CustomTabBar';
 import {AmplifyProvider} from '@aws-amplify/ui-react';
 
+// export class Main extends Component {
+//   render() {
+//     if (this.props.authState === 'signedIn') {
+//       return (
+//         <NavigationContainer>
+//           <StatusBar translucent barStyle="light-content" />
+//           <CustomTabBar />
+//         </NavigationContainer>
+//       );
+//     } else {
+//       return null;
+//     }
+//   }
+// }
 let isDarkMode;
 const win = Dimensions.get('window');
 const ratio = win.width / 541;

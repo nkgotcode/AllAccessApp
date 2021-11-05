@@ -34,14 +34,17 @@ import {
 } from 'aws-amplify-react-native';
 import Amplify, {Auth} from 'aws-amplify';
 import {Hub} from '@aws-amplify/core';
-// import {withAuthenticator} from '@aws-amplify/ui-react';
-// import '@aws-amplify/ui-react/node_modules/@aws-amplify/ui/dist/styles.css';
 import config from './src/aws-exports';
 import CustomAmplifyTheme from './screens/CustomAmplifyTheme';
 import {CognitoUser} from 'amazon-cognito-identity-js';
 import InAppBrowser from 'react-native-inappbrowser-reborn';
 import urlOpener from './screens/UrlOpener';
 import Icons from 'react-native-vector-icons/FontAwesome5';
+import {NativeModules} from 'react-native';
+
+if (__DEV__) {
+  NativeModules.DevSettings.setIsDebuggingRemotely(true);
+}
 
 Amplify.configure({
   ...config,
@@ -50,32 +53,32 @@ Amplify.configure({
     urlOpener,
   },
 });
-// Amplify.configure(config);
 
 let isDarkMode;
 
-const AuthScreens = props => {
-  console.log(props.authState);
-  switch (props.authState) {
-    case 'signedIn':
-      return <Main />;
-    default:
-      return <></>;
-  }
-};
-
 class App extends React.Component {
   state = {
+    user: null,
+    customState: null,
     authenticated: false,
+    authState: '',
+    showFederated: true,
   };
 
+  // AuthScreens = props => {
+  //   console.log(props.authState);
+  //   switch (props.authState) {
+  //   }
+  // };
+
   render() {
-    if (this.state.authenticated) {
+    if (this.state.authState === 'signedIn') {
       return <Main />;
     }
+
     return (
       <View style={{flex: 1}}>
-        {this.state.authenticated ? (
+        {this.state.authState === 'signedIn' ? (
           <Main />
         ) : (
           <Authenticator
@@ -84,49 +87,50 @@ class App extends React.Component {
             theme={CustomAmplifyTheme}
             authState="signIn"
             authData={CognitoUser | 'username'}
-            onStateChange={authState => AuthScreens}>
-            <View style={styles.federatedLogIn}>
-              <TouchableOpacity style={styles.federatedOptions}>
-                <Icons
-                  color={Colors.lighter}
-                  name="google"
-                  size={40}
-                  style={{paddingBottom: 10}}
-                  onPress={() => {
-                    Auth.federatedSignIn({provider: 'Google'});
-                  }}
-                />
-                <Text style={{color: Colors.lighter}}>Log in with Google</Text>
-              </TouchableOpacity>
+            onStateChange={authState =>
+              this.setState({
+                authState: authState,
+                showFederated: authState === 'signIn' || authState === 'signUp',
+              })
+            }>
+            {this.state.showFederated && (
+              <View style={styles.federatedLogIn}>
+                <TouchableOpacity style={styles.federatedOptions}>
+                  <Icons
+                    color={Colors.lighter}
+                    name="google"
+                    size={40}
+                    style={{paddingBottom: 10}}
+                    onPress={() => {
+                      Auth.federatedSignIn({provider: 'Google'});
+                    }}
+                  />
 
-              <TouchableOpacity style={styles.federatedOptions}>
-                <Icons
-                  color={Colors.lighter}
-                  name="facebook"
-                  size={40}
-                  style={{paddingBottom: 10}}
-                  onPress={() => {
-                    Auth.federatedSignIn({provider: 'Facebook'});
-                  }}
-                />
-                <Text style={{color: Colors.lighter}}>
-                  Log in with Facebook
-                </Text>
-              </TouchableOpacity>
-            </View>
+                  <Text style={{color: Colors.lighter}}>
+                    Log in with Google
+                  </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.federatedOptions}>
+                  <Icons
+                    color={Colors.lighter}
+                    name="facebook"
+                    size={40}
+                    style={{paddingBottom: 10}}
+                    onPress={() => {
+                      Auth.federatedSignIn({provider: 'Facebook'});
+                    }}
+                  />
+                  <Text style={{color: Colors.lighter}}>
+                    Log in with Facebook
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            )}
           </Authenticator>
         )}
       </View>
     );
-
-    async function handleAuthStateChange() {
-      const user = await Auth.currentAuthenticatedUser().catch(err =>
-        console.log(err),
-      );
-      if (user != null) {
-        this.state.authenticated = true;
-      }
-    }
   }
 
   componentDidMount() {
@@ -140,32 +144,13 @@ class App extends React.Component {
       })
       .catch(e => {});
 
-    Linking.addEventListener('url', this.appWokeUp);
+    // Linking.addEventListener('url', this.appWokeUp);
   }
 
   componentWillUnmount() {
     Linking.addEventListener('url', this.appWokeUp).remove();
   }
 }
-
-handleAuth = ({payload}) => {
-  switch (payload.event) {
-    case 'parsingCallBackUrl':
-      if (payback.data.url) {
-        let urls = payload.data.url.split('?');
-        if (urls[0] === 'allaccessapp://') {
-          InAppBrowser.close();
-        } else if (urls[0] === 'allaccessapp://') {
-          InAppBrowser.close();
-        }
-      }
-      break;
-    case 'signOut':
-      InAppBrowser.close();
-      setAuthWaiting(false);
-      break;
-  }
-};
 
 const backgroundStyle = {
   backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
@@ -226,4 +211,4 @@ const styles = StyleSheet.create({
 });
 
 export * from './screens/CustomAmplifyTheme';
-export default withOAuth(App);
+export default App;
