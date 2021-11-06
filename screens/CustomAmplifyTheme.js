@@ -5,7 +5,8 @@ var deepSquidInk = '#152939';
 exports.deepSquidInk = deepSquidInk;
 var linkUnderlayColor = '#FFF';
 exports.linkUnderlayColor = linkUnderlayColor;
-var textInputColor = '#000000';
+// var textInputColor = '#000000';
+var textInputColor = '#FFF';
 exports.textInputColor = textInputColor;
 var textInputBorderColor = '#C4C4C4';
 exports.textInputBorderColor = textInputBorderColor;
@@ -168,6 +169,7 @@ var CustomAmplifyTheme = StyleSheet.create({
   signedOutMessage: {
     textAlign: 'center',
     padding: 20,
+    color: '#fff',
   },
 });
 

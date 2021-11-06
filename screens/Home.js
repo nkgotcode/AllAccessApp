@@ -16,6 +16,7 @@ import {
 import image1 from '../assets/images/ph1.jpg';
 import image2 from '../assets/images/ph2.jpg';
 import image3 from '../assets/images/ph3.jpg';
+import bgImg from '../assets/images/benjamin-suter-chicago-unsplash.jpg';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import 'react-native-gesture-handler';
@@ -78,7 +79,8 @@ const Home = () => {
   return (
     <View style={styles.bg}>
       <ScrollView contentContainerStyle={{flexGrow: 1}} scrol>
-        <View style={styles.container}>
+        <ImageBackground style={styles.bgImage} source={bgImg}>
+          {/* <View style={styles.container}>
           <Text
             style={{
               position: 'relative',
@@ -95,7 +97,8 @@ const Home = () => {
             <BacheloretteParty />
             <SurpriseParty />
           </Text>
-        </View>
+        </View> */}
+        </ImageBackground>
       </ScrollView>
     </View>
   );
@@ -134,6 +137,11 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     width: win.width,
     height: 320 * ratio,
+  },
+  bgImage: {
+    alignSelf: 'center',
+    width: win.width,
+    height: win.height,
   },
 });
 

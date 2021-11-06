@@ -8618,6 +8618,11 @@
   dependencies:
     "fast-base64-decode" "^1.0.0"
 
+"react-native-image-picker@^4.1.2":
+  "integrity" "sha512-e4frAekSJkOgEmL9UOLukGhjtPwHSD7qSf3Rmwk+850ofxKqZFfAIfWc9MO3UmCb6G7oB6PkckyTOGOXybrN5A=="
+  "resolved" "https://registry.npmjs.org/react-native-image-picker/-/react-native-image-picker-4.1.2.tgz"
+  "version" "4.1.2"
+
 "react-native-inappbrowser-reborn@^3.6.3":
   "integrity" "sha512-fqF708GVZ/7zja0/GyJQfjDfKREOe1fxYq8RAKZo8/KK6SkFO9hBlYqC3PwLFPw29zzwBzR+6EpL3qo95igkLw=="
   "resolved" "https://registry.npmjs.org/react-native-inappbrowser-reborn/-/react-native-inappbrowser-reborn-3.6.3.tgz"
