@@ -78,28 +78,20 @@ const Home = () => {
   };
   return (
     <View style={styles.bg}>
-      <ScrollView contentContainerStyle={{flexGrow: 1}} scrol>
-        <ImageBackground style={styles.bgImage} source={bgImg}>
-          {/* <View style={styles.container}>
-          <Text
-            style={{
-              position: 'relative',
-              fontSize: 40,
-              fontWeight: 'bold',
-              alignItems: 'center',
-              justifyContent: 'center',
-              top: '10%',
-              textAlign: 'center',
-              color: 'tomato',
-            }}>
+      {/* <ScrollView contentContainerStyle={{flexGrow: 1}} scrol> */}
+      <ImageBackground style={styles.bgImage} source={bgImg}>
+        {/* <View style={styles.container}> */}
+        <ScrollView contentContainerStyle={{flexGrow: 1}} scrol>
+          <Text style={styles.headerText}>
             Welcome To Chicago Nightlife Experience
-            <BirthdayPack />
+            {/* <BirthdayPack />
             <BacheloretteParty />
-            <SurpriseParty />
+            <SurpriseParty /> */}
           </Text>
-        </View> */}
-        </ImageBackground>
-      </ScrollView>
+        </ScrollView>
+        {/* </View> */}
+      </ImageBackground>
+      {/* </ScrollView> */}
     </View>
   );
 };
@@ -142,6 +134,17 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     width: win.width,
     height: win.height,
+  },
+  headerText: {
+    position: 'relative',
+    fontSize: 40,
+    fontWeight: 'bold',
+    // alignItems: 'center',
+    top: '10%',
+    textAlign: 'left',
+    color: 'tomato',
+    opacity: 0.83,
+    marginHorizontal: 20,
   },
 });
 

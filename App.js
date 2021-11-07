@@ -41,7 +41,6 @@ import InAppBrowser from 'react-native-inappbrowser-reborn';
 import urlOpener from './screens/UrlOpener';
 import Icons from 'react-native-vector-icons/FontAwesome5';
 import {NativeModules} from 'react-native';
-import {ActionSheetProvider} from '@expo/react-native-action-sheet';
 
 if (__DEV__) {
   NativeModules.DevSettings.setIsDebuggingRemotely(true);
@@ -78,62 +77,59 @@ class App extends React.Component {
     }
 
     return (
-      <ActionSheetProvider>
-        <View style={{flex: 1}}>
-          {this.state.authState === 'signedIn' ? (
-            <Main />
-          ) : (
-            <Authenticator
-              usernameAttributes="email"
-              signUpConfig={signUpConfig}
-              theme={CustomAmplifyTheme}
-              authState="signIn"
-              authData={CognitoUser | 'username'}
-              onStateChange={authState =>
-                this.setState({
-                  authState: authState,
-                  showFederated:
-                    authState === 'signIn' || authState === 'signUp',
-                })
-              }>
-              {this.state.showFederated && (
-                <View style={styles.federatedLogIn}>
-                  <TouchableOpacity style={styles.federatedOptions}>
-                    <Icons
-                      color={Colors.lighter}
-                      name="google"
-                      size={40}
-                      style={{paddingBottom: 10}}
-                      onPress={() => {
-                        Auth.federatedSignIn({provider: 'Google'});
-                      }}
-                    />
+      <View style={{flex: 1}}>
+        {this.state.authState === 'signedIn' ? (
+          <Main />
+        ) : (
+          <Authenticator
+            usernameAttributes="email"
+            signUpConfig={signUpConfig}
+            theme={CustomAmplifyTheme}
+            authState="signIn"
+            authData={CognitoUser | 'username'}
+            onStateChange={authState =>
+              this.setState({
+                authState: authState,
+                showFederated: authState === 'signIn' || authState === 'signUp',
+              })
+            }>
+            {this.state.showFederated && (
+              <View style={styles.federatedLogIn}>
+                <TouchableOpacity style={styles.federatedOptions}>
+                  <Icons
+                    color={Colors.lighter}
+                    name="google"
+                    size={40}
+                    style={{paddingBottom: 10}}
+                    onPress={() => {
+                      Auth.federatedSignIn({provider: 'Google'});
+                    }}
+                  />
 
-                    <Text style={{color: Colors.lighter}}>
-                      Log in with Google
-                    </Text>
-                  </TouchableOpacity>
+                  <Text style={{color: Colors.lighter}}>
+                    Log in with Google
+                  </Text>
+                </TouchableOpacity>
 
-                  <TouchableOpacity style={styles.federatedOptions}>
-                    <Icons
-                      color={Colors.lighter}
-                      name="facebook"
-                      size={40}
-                      style={{paddingBottom: 10}}
-                      onPress={() => {
-                        Auth.federatedSignIn({provider: 'Facebook'});
-                      }}
-                    />
-                    <Text style={{color: Colors.lighter}}>
-                      Log in with Facebook
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              )}
-            </Authenticator>
-          )}
-        </View>
-      </ActionSheetProvider>
+                <TouchableOpacity style={styles.federatedOptions}>
+                  <Icons
+                    color={Colors.lighter}
+                    name="facebook"
+                    size={40}
+                    style={{paddingBottom: 10}}
+                    onPress={() => {
+                      Auth.federatedSignIn({provider: 'Facebook'});
+                    }}
+                  />
+                  <Text style={{color: Colors.lighter}}>
+                    Log in with Facebook
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            )}
+          </Authenticator>
+        )}
+      </View>
     );
   }
 
